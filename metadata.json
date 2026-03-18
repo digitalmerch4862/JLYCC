@@ -1,0 +1,7 @@
+{
+  "name": "JLYCC",
+  "description": "Church operations and discipleship platform for Jesus Loves You Celebration Church.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
