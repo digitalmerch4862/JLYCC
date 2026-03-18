@@ -22,7 +22,8 @@ export const MOCK_PROFILES: MemberProfile[] = [
     shortDisplayName: 'Robert G.', gender: 'Male', birthday: '1995-05-15', age: 30, mobileNumber: '09191234567',
     address: 'Quezon City', occupationSchool: 'Engineer', emergencyContact: '09201234567', currentChurchStatus: 'Regular Member',
     firstAttendedDate: '2023-01-10', ministriesOfInterest: ['m1', 'm2'], assignedHeartLinkId: 'hl1', profileCompleted: true,
-    qrCodeValue: 'QR_u5', journeyStage: 'Begin serving or joining regularly'
+    qrCodeValue: 'QR_u5', journeyStage: 'Begin serving or joining regularly',
+    vehicleManufacturer: 'Toyota', vehicleModel: 'Fortuner', vehicleColor: 'Black', vehiclePlateNumber: 'ABC1234'
   },
   {
     id: 'p6', userId: 'u6', fullName: 'Maria Santos Cruz', preferredName: 'Maria', displayName: 'Maria Santos Cruz',
@@ -37,7 +38,7 @@ export const MOCK_MINISTRIES: Ministry[] = [
   { id: 'm1', name: 'KingdomKids', category: 'Age / Life Stage', description: 'Ages 4 to 12', purpose: 'To raise the next generation of believers.', ageGroup: '4-12', active: true },
   { id: 'm2', name: 'LeadTakers Youth', category: 'Age / Life Stage', description: 'Ages 13 to college students', purpose: 'Empowering the youth to lead.', ageGroup: '13-22', active: true },
   { id: 'm3', name: 'LeadTakers Pro', category: 'Age / Life Stage', description: 'Young adults and professionals', purpose: 'Navigating career and faith.', ageGroup: '23-35', active: true },
-  { id: 'm4', name: 'D81', category: 'Age / Life Stage', description: 'Businessmen', purpose: 'Faith in the marketplace.', ageGroup: 'Adults', active: true },
+  { id: 'm4', name: 'D818', category: 'Age / Life Stage', description: 'Businessmen', purpose: 'Faith in the marketplace.', ageGroup: 'Adults', active: true },
   { id: 'm5', name: 'Davidic Symphonia', category: 'Service / Volunteer', description: 'Worship team, singers, musicians', purpose: 'Leading the congregation in worship.', ageGroup: 'All', active: true },
   { id: 'm6', name: 'Move', category: 'Service / Volunteer', description: 'Dance ministry', purpose: 'Worship through movement.', ageGroup: 'All', active: true },
   { id: 'm7', name: 'Zoom', category: 'Service / Volunteer', description: 'Multimedia, streaming, cameras, visuals', purpose: 'Enhancing the visual experience.', ageGroup: 'All', active: true },

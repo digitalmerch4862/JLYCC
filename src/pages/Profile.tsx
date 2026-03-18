@@ -317,6 +317,76 @@ const Profile = () => {
                   <span className="font-medium">How to find:</span> Open Telegram Settings &gt; My Profile to see your @username.
                 </p>
               </div>
+
+              <div className="sm:col-span-6 mt-4 border-t border-stone-100 dark:border-stone-700 pt-6">
+                <h4 className="text-md font-medium text-stone-900 dark:text-white mb-4">Vehicle Information</h4>
+                <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-4">
+                  <div className="sm:col-span-1">
+                    <label htmlFor="vehicleManufacturer" className="block text-sm font-medium text-stone-700 dark:text-stone-300">
+                      Manufacturer
+                    </label>
+                    <div className="mt-1">
+                      <input
+                        type="text"
+                        name="vehicleManufacturer"
+                        id="vehicleManufacturer"
+                        placeholder="e.g. Toyota"
+                        value={formData.vehicleManufacturer || ''}
+                        onChange={handleChange}
+                        className="shadow-sm focus:ring-pink-500 focus:border-pink-500 block w-full sm:text-sm border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-white"
+                      />
+                    </div>
+                  </div>
+                  <div className="sm:col-span-1">
+                    <label htmlFor="vehicleModel" className="block text-sm font-medium text-stone-700 dark:text-stone-300">
+                      Model
+                    </label>
+                    <div className="mt-1">
+                      <input
+                        type="text"
+                        name="vehicleModel"
+                        id="vehicleModel"
+                        placeholder="e.g. Fortuner"
+                        value={formData.vehicleModel || ''}
+                        onChange={handleChange}
+                        className="shadow-sm focus:ring-pink-500 focus:border-pink-500 block w-full sm:text-sm border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-white"
+                      />
+                    </div>
+                  </div>
+                  <div className="sm:col-span-1">
+                    <label htmlFor="vehicleColor" className="block text-sm font-medium text-stone-700 dark:text-stone-300">
+                      Color
+                    </label>
+                    <div className="mt-1">
+                      <input
+                        type="text"
+                        name="vehicleColor"
+                        id="vehicleColor"
+                        placeholder="e.g. Black"
+                        value={formData.vehicleColor || ''}
+                        onChange={handleChange}
+                        className="shadow-sm focus:ring-pink-500 focus:border-pink-500 block w-full sm:text-sm border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-white"
+                      />
+                    </div>
+                  </div>
+                  <div className="sm:col-span-1">
+                    <label htmlFor="vehiclePlateNumber" className="block text-sm font-medium text-stone-700 dark:text-stone-300">
+                      Plate Number
+                    </label>
+                    <div className="mt-1">
+                      <input
+                        type="text"
+                        name="vehiclePlateNumber"
+                        id="vehiclePlateNumber"
+                        placeholder="e.g. ABC1234"
+                        value={formData.vehiclePlateNumber || ''}
+                        onChange={handleChange}
+                        className="shadow-sm focus:ring-pink-500 focus:border-pink-500 block w-full sm:text-sm border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-700 text-stone-900 dark:text-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 

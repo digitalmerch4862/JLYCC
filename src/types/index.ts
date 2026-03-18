@@ -53,6 +53,10 @@ export interface MemberProfile {
   currentSeason?: string;
   activitiesHobbies?: string[];
   preferredDaysToMeet?: string[];
+  vehicleManufacturer?: string;
+  vehicleModel?: string;
+  vehicleColor?: string;
+  vehiclePlateNumber?: string;
 }
 
 export interface Ministry {
