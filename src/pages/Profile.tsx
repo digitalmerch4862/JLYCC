@@ -131,20 +131,26 @@ const Profile = () => {
           {showWebcam && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
               <div className="bg-white dark:bg-stone-800 p-4 rounded-2xl shadow-xl">
-                <Webcam
-                  audio={false}
-                  ref={webcamRef}
-                  screenshotFormat="image/jpeg"
-                  className="rounded-lg"
-                  videoConstraints={{ facingMode: "user" }}
-                  mirrored={true}
-                  screenshotQuality={0.8}
-                  disablePictureInPicture={true}
-                  forceScreenshotSourceSize={true}
-                  imageSmoothing={true}
-                  onUserMedia={() => console.log("Webcam user media loaded")}
-                  onUserMediaError={(err) => console.error("Webcam user media error:", err)}
-                />
+                <div className="relative">
+                  <Webcam
+                    audio={false}
+                    ref={webcamRef}
+                    screenshotFormat="image/jpeg"
+                    className="rounded-lg"
+                    videoConstraints={{ facingMode: "user" }}
+                    mirrored={true}
+                    screenshotQuality={0.8}
+                    disablePictureInPicture={true}
+                    forceScreenshotSourceSize={true}
+                    imageSmoothing={true}
+                    onUserMedia={() => console.log("Webcam user media loaded")}
+                    onUserMediaError={(err) => console.error("Webcam user media error:", err)}
+                  />
+                  {/* Human-shaped guide overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="w-48 h-64 border-4 border-white/50 rounded-[50%_50%_40%_40%]"></div>
+                  </div>
+                </div>
                 <div className="flex justify-between mt-4">
                   <button
                     type="button"
