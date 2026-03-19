@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { User, Save, CheckCircle, Upload, X } from 'lucide-react';
 import * as faceapi from 'face-api.js';
+import { supabase } from '../services/supabaseClient';
 
 const Profile = () => {
   const { currentProfile, updateProfile } = useAppContext();
@@ -13,7 +14,7 @@ const Profile = () => {
 
   useEffect(() => {
     const loadModels = async () => {
-      const MODEL_URL = '/models';
+      const MODEL_URL = 'https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights/';
       try {
         await Promise.all([
           faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
@@ -54,27 +55,42 @@ const Profile = () => {
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const imageSrc = reader.result as string;
-        try {
-          const img = await faceapi.fetchImage(imageSrc);
-          const detection = await faceapi.detectSingleFace(img, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();
-          if (detection) {
-            setFormData((prev: any) => ({ 
-              ...prev, 
-              profilePhotoUrl: imageSrc,
-              faceDescriptor: Array.from(detection.descriptor)
-            }));
-          } else {
-            alert("No face detected. Please try again.");
-          }
-        } catch (error) {
-          console.error("Error during face detection:", error);
-          alert("Error detecting face. Please try again.");
+      try {
+        // 1. Upload to Supabase Storage
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Math.random()}.${fileExt}`;
+        const filePath = `profile-photos/${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from('profile-photos')
+          .upload(filePath, file);
+
+        if (uploadError) throw uploadError;
+
+        // 2. Get Public URL
+        const { data: publicUrlData } = supabase.storage
+          .from('profile-photos')
+          .getPublicUrl(filePath);
+
+        const publicUrl = publicUrlData.publicUrl;
+
+        // 3. Face Detection
+        const img = await faceapi.fetchImage(publicUrl);
+        const detection = await faceapi.detectSingleFace(img, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();
+        
+        if (detection) {
+          setFormData((prev: any) => ({ 
+            ...prev, 
+            profilePhotoUrl: publicUrl,
+            faceDescriptor: Array.from(detection.descriptor)
+          }));
+        } else {
+          alert("No face detected. Please try again.");
         }
-      };
-      reader.readAsDataURL(file);
+      } catch (error) {
+        console.error("Error during face detection or upload:", error);
+        alert("Error processing image. Please try again.");
+      }
     }
   };
 

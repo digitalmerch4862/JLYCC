@@ -30,33 +30,33 @@ const MainLayout = () => {
   );
 
   return (
-    <div className="flex h-screen bg-stone-50 dark:bg-stone-900 text-stone-900 dark:text-stone-100 font-sans">
+    <div className="flex h-screen bg-bg text-text-primary font-sans">
       {/* Mobile Menu Button */}
       <div className="md:hidden fixed top-4 left-4 z-50 flex items-center gap-2">
         <button 
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="p-2 bg-white dark:bg-stone-800 rounded-md shadow-md"
+          className="p-2 bg-surface rounded-md shadow-md"
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       <div className="md:hidden fixed top-4 right-4 z-50">
-        <div className="bg-white dark:bg-stone-800 rounded-md shadow-md">
+        <div className="bg-surface rounded-md shadow-md">
           <ThemeToggle />
         </div>
       </div>
 
       {/* Sidebar */}
       <aside className={`
-        fixed md:static inset-y-0 left-0 z-40 w-64 bg-white dark:bg-stone-800 shadow-lg transform transition-transform duration-300 ease-in-out
+        fixed md:static inset-y-0 left-0 z-40 w-64 bg-surface shadow-lg transform transition-transform duration-300 ease-in-out
         ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
       `}>
         <div className="flex flex-col h-full">
-          <div className="p-6 border-b border-stone-100 dark:border-stone-700 flex justify-between items-center gap-2">
+          <div className="p-6 border-b border-surface flex justify-between items-center gap-2">
             <div className="min-w-0">
-              <h1 className="text-2xl font-bold text-pink-600 dark:text-pink-400 tracking-tight truncate">JLYCC Connect</h1>
-              <p className="text-xs text-stone-500 dark:text-stone-400 mt-1 truncate">Jesus Loves You Celebration Church</p>
+              <h1 className="text-xl font-bold text-accent tracking-tight truncate">HI, {currentUser?.email.split('@')[0]}</h1>
+              <p className="text-xs text-text-secondary mt-1 truncate">Jesus Loves You Celebration Church</p>
             </div>
             <div className="hidden md:block shrink-0">
               <ThemeToggle />
@@ -75,8 +75,8 @@ const MainLayout = () => {
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={`flex items-center px-3 py-2.5 rounded-lg transition-colors ${
                         isActive 
-                          ? 'bg-pink-50 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300 font-medium' 
-                          : 'text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700/50'
+                          ? 'bg-accent/20 text-accent font-medium' 
+                          : 'text-text-secondary hover:bg-surface'
                       }`}
                     >
                       <Icon size={20} className="mr-3" />
@@ -88,19 +88,19 @@ const MainLayout = () => {
             </ul>
           </nav>
 
-          <div className="p-4 border-t border-stone-100 dark:border-stone-700">
+          <div className="p-4 border-t border-surface">
             <div className="flex items-center mb-4 px-2">
-              <div className="w-8 h-8 rounded-full bg-pink-100 dark:bg-pink-900 flex items-center justify-center text-pink-700 dark:text-pink-300 font-bold mr-3">
+              <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold mr-3">
                 {currentUser?.email.charAt(0).toUpperCase()}
               </div>
               <div className="overflow-hidden">
                 <p className="text-sm font-medium truncate">{currentUser?.email}</p>
-                <p className="text-xs text-stone-500 truncate">{currentUser?.role}</p>
+                <p className="text-xs text-text-secondary truncate">{currentUser?.role}</p>
               </div>
             </div>
             <button
               onClick={logout}
-              className="flex items-center w-full px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+              className="flex items-center w-full px-3 py-2 text-sm text-red-500 hover:bg-red-900/20 rounded-lg transition-colors"
             >
               <LogOut size={18} className="mr-3" />
               Sign Out
@@ -110,7 +110,7 @@ const MainLayout = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto bg-stone-50 dark:bg-stone-900 p-4 md:p-8 pt-16 md:pt-8">
+      <main className="flex-1 overflow-y-auto bg-bg p-4 md:p-8 pt-16 md:pt-8">
         <div className="max-w-6xl mx-auto">
           <Outlet />
         </div>

@@ -119,8 +119,11 @@ const AdminDashboard = () => {
               <span className="text-sm font-medium text-stone-900 dark:text-white">Facial Attendance Scanner</span>
               <Camera className="h-5 w-5 text-stone-400 group-hover:text-pink-500 transition-colors" />
             </button>
-            <button className="w-full text-left px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-700/50 border border-stone-100 dark:border-stone-600 hover:border-pink-300 dark:hover:border-pink-700 transition-colors flex items-center justify-between group">
-              <span className="text-sm font-medium text-stone-900 dark:text-white">Manage Members</span>
+            <button 
+              onClick={() => navigate('/admin/crm')}
+              className="w-full text-left px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-700/50 border border-stone-100 dark:border-stone-600 hover:border-pink-300 dark:hover:border-pink-700 transition-colors flex items-center justify-between group"
+            >
+              <span className="text-sm font-medium text-stone-900 dark:text-white">Manage Members (CRM)</span>
               <Users className="h-5 w-5 text-stone-400 group-hover:text-pink-500 transition-colors" />
             </button>
             <button className="w-full text-left px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-700/50 border border-stone-100 dark:border-stone-600 hover:border-pink-300 dark:hover:border-pink-700 transition-colors flex items-center justify-between group">
