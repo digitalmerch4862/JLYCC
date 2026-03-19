@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAppContext } from '../context/AppContext';
-import { User, Save, CheckCircle, Camera, X } from 'lucide-react';
-import Webcam from 'react-webcam';
-
+import { User, Save, CheckCircle, Upload, X } from 'lucide-react';
 import * as faceapi from 'face-api.js';
 
 const Profile = () => {
@@ -10,8 +8,7 @@ const Profile = () => {
   const [formData, setFormData] = useState(currentProfile || {});
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
-  const [showWebcam, setShowWebcam] = useState(false);
-  const webcamRef = useRef<Webcam>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [modelsLoaded, setModelsLoaded] = useState(false);
 
   useEffect(() => {
@@ -52,6 +49,33 @@ const Profile = () => {
         return { ...prev, [fieldName]: currentArray.filter((item: string) => item !== value) };
       }
     });
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const imageSrc = reader.result as string;
+        try {
+          const img = await faceapi.fetchImage(imageSrc);
+          const detection = await faceapi.detectSingleFace(img, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();
+          if (detection) {
+            setFormData((prev: any) => ({ 
+              ...prev, 
+              profilePhotoUrl: imageSrc,
+              faceDescriptor: Array.from(detection.descriptor)
+            }));
+          } else {
+            alert("No face detected. Please try again.");
+          }
+        } catch (error) {
+          console.error("Error during face detection:", error);
+          alert("Error detecting face. Please try again.");
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -122,88 +146,24 @@ const Profile = () => {
                   </div>
                 )}
               </div>
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                accept="image/*"
+                className="hidden"
+              />
               <button
                 type="button"
-                onClick={() => setShowWebcam(true)}
-                className="flex items-center px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg text-sm font-medium text-stone-700 dark:text-stone-300 bg-white dark:bg-stone-700 hover:bg-stone-50 dark:hover:bg-stone-600"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={!modelsLoaded}
+                className="flex items-center px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg text-sm font-medium text-stone-700 dark:text-stone-300 bg-white dark:bg-stone-700 hover:bg-stone-50 dark:hover:bg-stone-600 disabled:opacity-50"
               >
-                <Camera className="mr-2" size={18} />
-                Take Photo
+                <Upload className="mr-2" size={18} />
+                {modelsLoaded ? 'Upload Photo' : 'Loading Models...'}
               </button>
             </div>
           </div>
-
-          {/* Webcam Modal */}
-          {showWebcam && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-              <div className="bg-white dark:bg-stone-800 p-4 rounded-2xl shadow-xl">
-                <div className="relative">
-                  <Webcam
-                    audio={false}
-                    ref={webcamRef}
-                    screenshotFormat="image/jpeg"
-                    className="rounded-lg"
-                    videoConstraints={{ facingMode: "user" }}
-                    mirrored={true}
-                    screenshotQuality={0.8}
-                    disablePictureInPicture={true}
-                    forceScreenshotSourceSize={true}
-                    imageSmoothing={true}
-                    onUserMedia={() => console.log("Webcam user media loaded")}
-                    onUserMediaError={(err) => console.error("Webcam user media error:", err)}
-                  />
-                  {/* Human-shaped guide overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="w-48 h-64 border-4 border-white/50 rounded-[50%_50%_40%_40%]"></div>
-                  </div>
-                </div>
-                <div className="flex justify-between mt-4">
-                  <button
-                    type="button"
-                    onClick={() => setShowWebcam(false)}
-                    className="px-4 py-2 text-stone-600 dark:text-stone-400"
-                  >
-                    <X size={24} />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={async () => {
-                      console.log("Capture button clicked");
-                      const imageSrc = webcamRef.current?.getScreenshot();
-                      console.log("imageSrc:", imageSrc ? "got image" : "no image");
-                      if (imageSrc) {
-                        try {
-                          const img = await faceapi.fetchImage(imageSrc);
-                          console.log("Image fetched");
-                          const detection = await faceapi.detectSingleFace(img, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();
-                          console.log("Detection:", detection);
-                          if (detection) {
-                            setFormData((prev: any) => ({ 
-                              ...prev, 
-                              profilePhotoUrl: imageSrc,
-                              faceDescriptor: Array.from(detection.descriptor)
-                            }));
-                            setShowWebcam(false);
-                          } else {
-                            alert("No face detected. Please try again.");
-                          }
-                        } catch (error) {
-                          console.error("Error during face detection:", error);
-                          alert("Error detecting face. Please try again.");
-                        }
-                      } else {
-                        alert("Could not capture image. Please try again.");
-                      }
-                    }}
-                    disabled={!modelsLoaded}
-                    className="px-4 py-2 bg-pink-600 text-white rounded-lg disabled:opacity-50"
-                  >
-                    {modelsLoaded ? 'Capture' : 'Loading Models...'}
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Basic Information */}
           <div>
