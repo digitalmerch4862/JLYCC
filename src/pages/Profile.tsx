@@ -142,8 +142,8 @@ const Profile = () => {
                   disablePictureInPicture={true}
                   forceScreenshotSourceSize={true}
                   imageSmoothing={true}
-                  onUserMedia={() => {}}
-                  onUserMediaError={() => {}}
+                  onUserMedia={() => console.log("Webcam user media loaded")}
+                  onUserMediaError={(err) => console.error("Webcam user media error:", err)}
                 />
                 <div className="flex justify-between mt-4">
                   <button
@@ -156,25 +156,37 @@ const Profile = () => {
                   <button
                     type="button"
                     onClick={async () => {
+                      console.log("Capture button clicked");
                       const imageSrc = webcamRef.current?.getScreenshot();
+                      console.log("imageSrc:", imageSrc ? "got image" : "no image");
                       if (imageSrc) {
-                        const img = await faceapi.fetchImage(imageSrc);
-                        const detection = await faceapi.detectSingleFace(img, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();
-                        if (detection) {
-                          setFormData((prev: any) => ({ 
-                            ...prev, 
-                            profilePhotoUrl: imageSrc,
-                            faceDescriptor: Array.from(detection.descriptor)
-                          }));
-                          setShowWebcam(false);
-                        } else {
-                          alert("No face detected. Please try again.");
+                        try {
+                          const img = await faceapi.fetchImage(imageSrc);
+                          console.log("Image fetched");
+                          const detection = await faceapi.detectSingleFace(img, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();
+                          console.log("Detection:", detection);
+                          if (detection) {
+                            setFormData((prev: any) => ({ 
+                              ...prev, 
+                              profilePhotoUrl: imageSrc,
+                              faceDescriptor: Array.from(detection.descriptor)
+                            }));
+                            setShowWebcam(false);
+                          } else {
+                            alert("No face detected. Please try again.");
+                          }
+                        } catch (error) {
+                          console.error("Error during face detection:", error);
+                          alert("Error detecting face. Please try again.");
                         }
+                      } else {
+                        alert("Could not capture image. Please try again.");
                       }
                     }}
-                    className="px-4 py-2 bg-pink-600 text-white rounded-lg"
+                    disabled={!modelsLoaded}
+                    className="px-4 py-2 bg-pink-600 text-white rounded-lg disabled:opacity-50"
                   >
-                    Capture
+                    {modelsLoaded ? 'Capture' : 'Loading Models...'}
                   </button>
                 </div>
               </div>
