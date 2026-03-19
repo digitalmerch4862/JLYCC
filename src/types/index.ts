@@ -57,6 +57,8 @@ export interface MemberProfile {
   vehicleModel?: string;
   vehicleColor?: string;
   vehiclePlateNumber?: string;
+  profilePhotoUrl?: string;
+  faceDescriptor?: number[];
 }
 
 export interface Ministry {

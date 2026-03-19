@@ -15,6 +15,7 @@ import ISU from './pages/ISU';
 import Attendance from './pages/Attendance';
 import Events from './pages/Events';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminAttendance from './pages/AdminAttendance';
 
 const ProtectedRoute = ({ children, allowedRoles }: { children: React.ReactNode, allowedRoles?: string[] }) => {
   const { currentUser } = useAppContext();
@@ -49,6 +50,7 @@ function AppRoutes() {
           <Route path="attendance" element={<Attendance />} />
           <Route path="events" element={<Events />} />
           <Route path="admin" element={<ProtectedRoute allowedRoles={['Admin', 'Pastor', 'Inner Core']}><AdminDashboard /></ProtectedRoute>} />
+          <Route path="admin/attendance" element={<ProtectedRoute allowedRoles={['Admin', 'Pastor', 'Inner Core']}><AdminAttendance /></ProtectedRoute>} />
         </Route>
       </Routes>
     </Router>

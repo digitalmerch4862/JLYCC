@@ -1,12 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAppContext } from '../context/AppContext';
-import { User, Save, CheckCircle } from 'lucide-react';
+import { User, Save, CheckCircle, Camera, X } from 'lucide-react';
+import Webcam from 'react-webcam';
+
+import * as faceapi from 'face-api.js';
 
 const Profile = () => {
   const { currentProfile, updateProfile } = useAppContext();
   const [formData, setFormData] = useState(currentProfile || {});
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [showWebcam, setShowWebcam] = useState(false);
+  const webcamRef = useRef<Webcam>(null);
+  const [modelsLoaded, setModelsLoaded] = useState(false);
+
+  useEffect(() => {
+    const loadModels = async () => {
+      const MODEL_URL = '/models'; // Need to ensure models are served from here
+      await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+      await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+      await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+      setModelsLoaded(true);
+    };
+    loadModels();
+  }, []);
 
   useEffect(() => {
     if (currentProfile) {
@@ -84,6 +101,86 @@ const Profile = () => {
 
       <div className="bg-white dark:bg-stone-800 shadow-sm rounded-2xl border border-stone-100 dark:border-stone-700 overflow-hidden">
         <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-8">
+          {/* Profile Photo */}
+          <div>
+            <h3 className="text-lg font-semibold leading-6 text-stone-900 dark:text-white mb-4 border-b border-stone-100 dark:border-stone-700 pb-2">
+              Profile Photo
+            </h3>
+            <div className="flex items-center space-x-6">
+              <div className="relative w-32 h-32 rounded-full overflow-hidden bg-stone-100 dark:bg-stone-700 border-2 border-stone-200 dark:border-stone-600">
+                {formData.profilePhotoUrl ? (
+                  <img src={formData.profilePhotoUrl} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                  <div className="flex items-center justify-center w-full h-full text-stone-400">
+                    <User size={48} />
+                  </div>
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowWebcam(true)}
+                className="flex items-center px-4 py-2 border border-stone-300 dark:border-stone-600 rounded-lg text-sm font-medium text-stone-700 dark:text-stone-300 bg-white dark:bg-stone-700 hover:bg-stone-50 dark:hover:bg-stone-600"
+              >
+                <Camera className="mr-2" size={18} />
+                Take Photo
+              </button>
+            </div>
+          </div>
+
+          {/* Webcam Modal */}
+          {showWebcam && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+              <div className="bg-white dark:bg-stone-800 p-4 rounded-2xl shadow-xl">
+                <Webcam
+                  audio={false}
+                  ref={webcamRef}
+                  screenshotFormat="image/jpeg"
+                  className="rounded-lg"
+                  videoConstraints={{ facingMode: "user" }}
+                  mirrored={true}
+                  screenshotQuality={0.8}
+                  disablePictureInPicture={true}
+                  forceScreenshotSourceSize={true}
+                  imageSmoothing={true}
+                  onUserMedia={() => {}}
+                  onUserMediaError={() => {}}
+                />
+                <div className="flex justify-between mt-4">
+                  <button
+                    type="button"
+                    onClick={() => setShowWebcam(false)}
+                    className="px-4 py-2 text-stone-600 dark:text-stone-400"
+                  >
+                    <X size={24} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      const imageSrc = webcamRef.current?.getScreenshot();
+                      if (imageSrc) {
+                        const img = await faceapi.fetchImage(imageSrc);
+                        const detection = await faceapi.detectSingleFace(img, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();
+                        if (detection) {
+                          setFormData((prev: any) => ({ 
+                            ...prev, 
+                            profilePhotoUrl: imageSrc,
+                            faceDescriptor: Array.from(detection.descriptor)
+                          }));
+                          setShowWebcam(false);
+                        } else {
+                          alert("No face detected. Please try again.");
+                        }
+                      }
+                    }}
+                    className="px-4 py-2 bg-pink-600 text-white rounded-lg"
+                  >
+                    Capture
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Basic Information */}
           <div>
             <h3 className="text-lg font-semibold leading-6 text-stone-900 dark:text-white mb-4 border-b border-stone-100 dark:border-stone-700 pb-2">

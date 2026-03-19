@@ -1,10 +1,12 @@
 import React from 'react';
 import { useAppContext } from '../context/AppContext';
-import { Shield, Users, Map, Heart, BookOpen, CalendarCheck, Activity, UserPlus, QrCode } from 'lucide-react';
+import { Shield, Users, Map, Heart, BookOpen, CalendarCheck, Activity, UserPlus, QrCode, Camera } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const AdminDashboard = () => {
   const { users, profiles, ministries, heartLinks, events, attendance } = useAppContext();
+  const navigate = useNavigate();
 
   const totalMembers = profiles.length;
   const newMembers = profiles.filter(p => p.currentChurchStatus === 'Visitor' || p.currentChurchStatus === 'New Member').length;
@@ -109,6 +111,13 @@ const AdminDashboard = () => {
             <button className="w-full text-left px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-700/50 border border-stone-100 dark:border-stone-600 hover:border-pink-300 dark:hover:border-pink-700 transition-colors flex items-center justify-between group">
               <span className="text-sm font-medium text-stone-900 dark:text-white">Scan QR for Attendance</span>
               <QrCode className="h-5 w-5 text-stone-400 group-hover:text-pink-500 transition-colors" />
+            </button>
+            <button 
+              onClick={() => navigate('/admin/attendance')}
+              className="w-full text-left px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-700/50 border border-stone-100 dark:border-stone-600 hover:border-pink-300 dark:hover:border-pink-700 transition-colors flex items-center justify-between group"
+            >
+              <span className="text-sm font-medium text-stone-900 dark:text-white">Facial Attendance Scanner</span>
+              <Camera className="h-5 w-5 text-stone-400 group-hover:text-pink-500 transition-colors" />
             </button>
             <button className="w-full text-left px-4 py-3 rounded-xl bg-stone-50 dark:bg-stone-700/50 border border-stone-100 dark:border-stone-600 hover:border-pink-300 dark:hover:border-pink-700 transition-colors flex items-center justify-between group">
               <span className="text-sm font-medium text-stone-900 dark:text-white">Manage Members</span>
