@@ -79,9 +79,9 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="flex-1 bg-black">
+          <div className="flex-1 bg-black overflow-hidden relative">
             <iframe 
-              className="w-full h-full"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200%] h-[200%]"
               src="https://www.youtube.com/embed/GiURvSANcmw?autoplay=1&mute=1&start=65" 
               title="JLYCC Live Stream" 
               frameBorder="0" 

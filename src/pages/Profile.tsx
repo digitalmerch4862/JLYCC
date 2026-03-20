@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { User, Save, CheckCircle, Upload, X } from 'lucide-react';
 import * as faceapi from 'face-api.js';
-import { supabase } from '../services/supabaseClient';
+import { getSupabase } from '../services/supabaseClient';
 
 const Profile = () => {
   const { currentProfile, updateProfile } = useAppContext();
@@ -56,6 +56,7 @@ const Profile = () => {
     const file = e.target.files?.[0];
     if (file) {
       try {
+        const supabase = getSupabase();
         // 1. Upload to Supabase Storage
         const fileExt = file.name.split('.').pop();
         const fileName = `${Math.random()}.${fileExt}`;
