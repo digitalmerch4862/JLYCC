@@ -32,7 +32,7 @@ const Home = () => {
       <header className="bg-surface shadow-sm sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center">
-            <Heart className="text-accent mr-2" size={28} />
+            <img src="/logo.png" alt="JLYCC Logo" className="mr-2 h-8 w-8 object-contain" />
           </div>
           <div className="flex items-center space-x-2 sm:space-x-4">
             <ThemeToggle />
@@ -96,7 +96,7 @@ const Home = () => {
       <footer className="bg-surface border-t border-surface py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center mb-4 md:mb-0">
-            <Heart className="text-accent mr-2" size={20} />
+            <img src="/logo.png" alt="JLYCC Logo" className="mr-2 h-6 w-6 object-contain" />
             <span className="text-lg font-bold tracking-tight text-text-primary">JLYCC</span>
           </div>
           

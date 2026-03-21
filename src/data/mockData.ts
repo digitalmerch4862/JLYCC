@@ -7,6 +7,8 @@ export const MOCK_USERS: User[] = [
   { id: 'u4', email: 'hl_leader1@jlycc.org', role: 'HeartLink Leader', isActive: true },
   { id: 'u5', email: 'member1@gmail.com', role: 'Member', isActive: true },
   { id: 'u6', email: 'visitor1@gmail.com', role: 'Visitor', isActive: true },
+  { id: 'u7', email: 'garciarobertrich@gmail.com', role: 'Member', isActive: true },
+  { id: 'u8', email: 'digitalmerch4862@gmail.com', role: 'Member', isActive: true },
 ];
 
 export const MOCK_PROFILES: MemberProfile[] = [
@@ -31,6 +33,20 @@ export const MOCK_PROFILES: MemberProfile[] = [
     address: 'Makati', occupationSchool: 'Student', emergencyContact: '09221234567', currentChurchStatus: 'Visitor',
     firstAttendedDate: '2026-03-10', ministriesOfInterest: [], profileCompleted: false, qrCodeValue: '',
     journeyStage: 'Welcome to JLYCC'
+  },
+  {
+    id: 'p7', userId: 'u7', fullName: 'Robert Garcia', preferredName: 'Robert', displayName: 'Robert Garcia',
+    shortDisplayName: 'Robert G.', gender: 'Male', birthday: '1990-01-01', age: 36, mobileNumber: '09170000000',
+    address: 'Manila', occupationSchool: 'N/A', emergencyContact: '09170000000', currentChurchStatus: 'Regular Member',
+    firstAttendedDate: '2026-01-01', ministriesOfInterest: ['m1'], assignedHeartLinkId: 'hl1', profileCompleted: true,
+    qrCodeValue: 'QR_u7', journeyStage: 'Grow toward leadership or deeper discipleship'
+  },
+  {
+    id: 'p8', userId: 'u8', fullName: 'Digital Merch', preferredName: 'Digital', displayName: 'Digital Merch',
+    shortDisplayName: 'Digital M.', gender: 'Other', birthday: '1990-01-01', age: 36, mobileNumber: '09170000000',
+    address: 'Manila', occupationSchool: 'N/A', emergencyContact: '09170000000', currentChurchStatus: 'Regular Member',
+    firstAttendedDate: '2026-01-01', ministriesOfInterest: ['m1'], assignedHeartLinkId: 'hl1', profileCompleted: true,
+    qrCodeValue: 'QR_u8', journeyStage: 'Grow toward leadership or deeper discipleship'
   }
 ];
 

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAppContext } from '../context/AppContext';
 import { User, Save, CheckCircle, Upload, X } from 'lucide-react';
 import * as faceapi from 'face-api.js';
-import { getSupabase } from '../services/supabaseClient';
+import { storage } from '../services/firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const Profile = () => {
   const { currentProfile, updateProfile } = useAppContext();
@@ -56,24 +57,16 @@ const Profile = () => {
     const file = e.target.files?.[0];
     if (file) {
       try {
-        const supabase = getSupabase();
-        // 1. Upload to Supabase Storage
+        // 1. Upload to Firebase Storage
         const fileExt = file.name.split('.').pop();
         const fileName = `${Math.random()}.${fileExt}`;
         const filePath = `profile-photos/${fileName}`;
+        const storageRef = ref(storage, filePath);
 
-        const { error: uploadError } = await supabase.storage
-          .from('profile-photos')
-          .upload(filePath, file);
-
-        if (uploadError) throw uploadError;
+        await uploadBytes(storageRef, file);
 
         // 2. Get Public URL
-        const { data: publicUrlData } = supabase.storage
-          .from('profile-photos')
-          .getPublicUrl(filePath);
-
-        const publicUrl = publicUrlData.publicUrl;
+        const publicUrl = await getDownloadURL(storageRef);
 
         // 3. Face Detection
         const img = await faceapi.fetchImage(publicUrl);

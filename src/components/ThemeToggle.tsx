@@ -2,16 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
 
   useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+    if (savedTheme) {
+      setTheme(savedTheme);
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    } else {
+      // Default to dark
+      setTheme('dark');
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    }
+
     const handleThemeChange = () => {
       const isDark = document.documentElement.classList.contains('dark');
       setTheme(isDark ? 'dark' : 'light');
     };
-
-    // Initial check
-    handleThemeChange();
 
     // Listen for custom event
     window.addEventListener('theme-changed', handleThemeChange);
@@ -19,6 +31,7 @@ export default function ThemeToggle() {
   }, []);
 
   const toggleTheme = () => {
+    console.log('toggleTheme called');
     const isDark = document.documentElement.classList.contains('dark');
     if (isDark) {
       document.documentElement.classList.remove('dark');

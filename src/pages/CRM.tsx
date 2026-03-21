@@ -79,7 +79,7 @@ const CRM = () => {
 
   const renderLeaderView = () => {
     const leaderName = currentUser?.email.split('@')[0];
-    const leader = dummyUsers.find(u => u.name === leaderName || u.role === 'Leader');
+    const leader = dummyUsers.find(u => u.name === leaderName || u.role === 'Inner Core' || u.role === 'Joshua Gen');
     const members = dummyUsers.filter(u => u.leaderId === leader?.id);
     
     return (

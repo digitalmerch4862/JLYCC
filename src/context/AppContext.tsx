@@ -1,6 +1,8 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { User, MemberProfile, Ministry, HeartLinkGroup, ISUCourse, ISULesson, Event, AttendanceRecord } from '../types';
 import { MOCK_USERS, MOCK_PROFILES, MOCK_MINISTRIES, MOCK_HEARTLINKS, MOCK_ISU_COURSES, MOCK_ISU_LESSONS, MOCK_EVENTS, MOCK_ATTENDANCE } from '../data/mockData';
+import { auth, googleProvider } from '../services/firebase';
+import { signInWithPopup, signOut, onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 
 interface AppState {
   currentUser: User | null;
@@ -16,8 +18,8 @@ interface AppState {
 }
 
 interface AppContextType extends AppState {
-  login: (email: string) => void;
-  logout: () => void;
+  login: () => Promise<void>;
+  logout: () => Promise<void>;
   updateProfile: (profile: Partial<MemberProfile>) => void;
   addAttendance: (record: Omit<AttendanceRecord, 'id'>) => void;
   addMinistryInterest: (ministryIds: string[]) => void;
@@ -39,18 +41,50 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     attendance: MOCK_ATTENDANCE,
   });
 
-  const login = (email: string) => {
-    const user = state.users.find((u) => u.email === email);
-    if (user) {
-      const profile = state.profiles.find((p) => p.userId === user.id) || null;
-      setState((prev) => ({ ...prev, currentUser: user, currentProfile: profile }));
-    } else {
-      alert('User not found. Try admin@jlycc.org or member1@gmail.com');
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        console.log("Firebase user logged in:", firebaseUser.email);
+        
+        // Map Firebase user to your app's User type
+        const user = state.users.find((u) => u.email === firebaseUser.email) || {
+          id: firebaseUser.uid,
+          email: firebaseUser.email || '',
+          role: firebaseUser.email === 'garciarobertrich@gmail.com' ? 'Admin' : 'Member',
+          name: firebaseUser.displayName || 'New Member'
+        };
+        
+        // Find profile by email if userId doesn't match
+        const profile = state.profiles.find((p) => p.userId === user.id) || 
+                        state.profiles.find((p) => p.fullName.toLowerCase() === user.name.toLowerCase()) || 
+                        null;
+                        
+        console.log("Mapped user:", user);
+        console.log("Mapped profile:", profile);
+        
+        setState((prev) => ({ ...prev, currentUser: user, currentProfile: profile }));
+      } else {
+        console.log("Firebase user logged out");
+        setState((prev) => ({ ...prev, currentUser: null, currentProfile: null }));
+      }
+    });
+    return unsubscribe;
+  }, [state.users, state.profiles]);
+
+  const login = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (error) {
+      console.error('Login failed:', error);
     }
   };
 
-  const logout = () => {
-    setState((prev) => ({ ...prev, currentUser: null, currentProfile: null }));
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
   const updateProfile = (updatedData: Partial<MemberProfile>) => {
