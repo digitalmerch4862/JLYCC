@@ -18,7 +18,10 @@ const Login = () => {
       await login();
       navigate('/dashboard');
     } catch (error: any) {
-      if (error.code !== 'auth/popup-closed-by-user') {
+      console.error('Login error:', error);
+      if (error.code === 'auth/popup-blocked') {
+        alert('The login popup was blocked by your browser. Please allow popups for this site.');
+      } else if (error.code !== 'auth/popup-closed-by-user') {
         alert('Login failed. Please try again.');
       }
     } finally {
@@ -26,18 +29,23 @@ const Login = () => {
     }
   };
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleLogin = () => {
     setLoading(true);
-    try {
-      await login();
-      navigate('/dashboard');
-    } catch (error: any) {
-      if (error.code !== 'auth/popup-closed-by-user') {
-        alert('Login failed. Please try again.');
-      }
-    } finally {
-      setLoading(false);
-    }
+    login()
+      .then(() => {
+        navigate('/dashboard');
+      })
+      .catch((error: any) => {
+        console.error('Login error:', error);
+        if (error.code === 'auth/popup-blocked') {
+          alert('The login popup was blocked by your browser. Please allow popups for this site.');
+        } else if (error.code !== 'auth/popup-closed-by-user') {
+          alert('Login failed. Please try again.');
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const handleFacebookLogin = async () => {
@@ -47,7 +55,10 @@ const Login = () => {
       await login();
       navigate('/dashboard');
     } catch (error: any) {
-      if (error.code !== 'auth/popup-closed-by-user') {
+      console.error('Login error:', error);
+      if (error.code === 'auth/popup-blocked') {
+        alert('The login popup was blocked by your browser. Please allow popups for this site.');
+      } else if (error.code !== 'auth/popup-closed-by-user') {
         alert('Login failed. Please try again.');
       }
     } finally {

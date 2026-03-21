@@ -71,12 +71,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     return unsubscribe;
   }, [state.users, state.profiles]);
 
-  const login = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-    } catch (error) {
-      console.error('Login failed:', error);
-    }
+  const login = () => {
+    return signInWithPopup(auth, googleProvider);
   };
 
   const logout = async () => {
