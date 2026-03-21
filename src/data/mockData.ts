@@ -1,11 +1,11 @@
 import { User, MemberProfile, Ministry, HeartLinkGroup, ISUCourse, ISULesson, Event, AttendanceRecord } from '../types';
 
 export const MOCK_USERS: User[] = [
-  { id: 'u1', email: 'admin@jlycc.org', role: 'Admin', isActive: true },
+  { id: 'u1', email: 'admin@gmail.com', role: 'Admin', isActive: true },
   { id: 'u2', email: 'pastor@jlycc.org', role: 'Pastor', isActive: true },
   { id: 'u3', email: 'leader1@jlycc.org', role: 'Ministry Leader', isActive: true },
   { id: 'u4', email: 'hl_leader1@jlycc.org', role: 'HeartLink Leader', isActive: true },
-  { id: 'u5', email: 'member1@gmail.com', role: 'Member', isActive: true },
+  { id: 'u5', email: 'member@gmail.com', role: 'Member', isActive: true },
   { id: 'u6', email: 'visitor1@gmail.com', role: 'Visitor', isActive: true },
   { id: 'u7', email: 'garciarobertrich@gmail.com', role: 'Member', isActive: true },
   { id: 'u8', email: 'digitalmerch4862@gmail.com', role: 'Member', isActive: true },
@@ -20,8 +20,8 @@ export const MOCK_PROFILES: MemberProfile[] = [
     journeyStage: 'Grow toward leadership or deeper discipleship'
   },
   {
-    id: 'p5', userId: 'u5', fullName: 'Robert Garcia', preferredName: 'Rob', displayName: 'Robert Garcia',
-    shortDisplayName: 'Robert G.', gender: 'Male', birthday: '1995-05-15', age: 30, mobileNumber: '09191234567',
+    id: 'p5', userId: 'u5', fullName: 'Member User', preferredName: 'Member', displayName: 'Member User',
+    shortDisplayName: 'Member U.', gender: 'Male', birthday: '1995-05-15', age: 30, mobileNumber: '09191234567',
     address: 'Quezon City', occupationSchool: 'Engineer', emergencyContact: '09201234567', currentChurchStatus: 'Regular Member',
     firstAttendedDate: '2023-01-10', ministriesOfInterest: ['m1', 'm2'], assignedHeartLinkId: 'hl1', profileCompleted: true,
     qrCodeValue: 'QR_u5', journeyStage: 'Begin serving or joining regularly',

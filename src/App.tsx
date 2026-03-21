@@ -34,12 +34,14 @@ const ProtectedRoute = ({ children, allowedRoles }: { children: React.ReactNode,
 };
 
 function AppRoutes() {
+  const { currentUser } = useAppContext();
+  
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/" element={currentUser ? <Navigate to="/dashboard" replace /> : <Home />} />
+        <Route path="/login" element={currentUser ? <Navigate to="/dashboard" replace /> : <Login />} />
+        <Route path="/register" element={currentUser ? <Navigate to="/dashboard" replace /> : <Register />} />
         
         <Route path="/" element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
           <Route path="dashboard" element={<Dashboard />} />
@@ -56,6 +58,7 @@ function AppRoutes() {
           <Route path="admin/attendance" element={<ProtectedRoute allowedRoles={['Admin', 'Pastor', 'Inner Core']}><AdminAttendance /></ProtectedRoute>} />
           <Route path="admin/crm" element={<ProtectedRoute allowedRoles={['Admin', 'Pastor', 'Inner Core']}><AdminCRM /></ProtectedRoute>} />
         </Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );

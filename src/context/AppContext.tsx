@@ -19,6 +19,7 @@ interface AppState {
 
 interface AppContextType extends AppState {
   login: () => Promise<void>;
+  mockLogin: (email: string, password?: string) => Promise<void>;
   logout: () => Promise<void>;
   updateProfile: (profile: Partial<MemberProfile>) => void;
   addAttendance: (record: Omit<AttendanceRecord, 'id'>) => void;
@@ -29,8 +30,8 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [state, setState] = useState<AppState>({
-    currentUser: null,
-    currentProfile: null,
+    currentUser: MOCK_USERS.find(u => u.email === 'member@gmail.com') || MOCK_USERS[0],
+    currentProfile: MOCK_PROFILES.find(p => p.userId === 'u5') || MOCK_PROFILES[0],
     users: MOCK_USERS,
     profiles: MOCK_PROFILES,
     ministries: MOCK_MINISTRIES,
@@ -64,8 +65,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         
         setState((prev) => ({ ...prev, currentUser: user, currentProfile: profile }));
       } else {
-        console.log("Firebase user logged out");
-        setState((prev) => ({ ...prev, currentUser: null, currentProfile: null }));
+        console.log("No Firebase user, keeping default mock user for now");
+        // We keep the default user set in initial state
       }
     });
     return unsubscribe;
@@ -75,9 +76,25 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     return signInWithPopup(auth, googleProvider);
   };
 
+  const mockLogin = async (email: string, password?: string) => {
+    // For demonstration purposes, we accept 'qqqqqq' as the password for mock users
+    if (password && password !== 'qqqqqq') {
+      throw new Error('Invalid password');
+    }
+
+    const user = state.users.find((u) => u.email === email);
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const profile = state.profiles.find((p) => p.userId === user.id) || null;
+    setState((prev) => ({ ...prev, currentUser: user, currentProfile: profile }));
+  };
+
   const logout = async () => {
     try {
       await signOut(auth);
+      setState((prev) => ({ ...prev, currentUser: null, currentProfile: null }));
     } catch (error) {
       console.error('Logout failed:', error);
     }
@@ -129,7 +146,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   };
 
   return (
-    <AppContext.Provider value={{ ...state, login, logout, updateProfile, addAttendance, addMinistryInterest }}>
+    <AppContext.Provider value={{ ...state, login, mockLogin, logout, updateProfile, addAttendance, addMinistryInterest }}>
       {children}
     </AppContext.Provider>
   );

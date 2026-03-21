@@ -8,14 +8,20 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login } = useAppContext();
+  const { login, mockLogin } = useAppContext();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await login();
+      // Check if it's a mock user login
+      if ((email === 'admin@gmail.com' || email === 'member@gmail.com') && password === 'qqqqqq') {
+        await mockLogin(email, password);
+      } else {
+        // Fallback to normal login (which is currently just Google login in this app)
+        await login();
+      }
       navigate('/dashboard');
     } catch (error: any) {
       console.error('Login error:', error);
@@ -115,7 +121,7 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="appearance-none block w-full px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-lg shadow-sm placeholder-stone-400 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm bg-white dark:bg-stone-700 text-stone-900 dark:text-white transition-colors"
-                  placeholder="admin@jlycc.org or member1@gmail.com"
+                  placeholder="admin@gmail.com or member@gmail.com"
                 />
               </div>
             </div>
@@ -134,7 +140,7 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="appearance-none block w-full px-3 py-2 border border-stone-300 dark:border-stone-600 rounded-lg shadow-sm placeholder-stone-400 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm bg-white dark:bg-stone-700 text-stone-900 dark:text-white transition-colors"
-                  placeholder="Any password works for demo"
+                  placeholder="Use 'qqqqqq' for mock accounts"
                 />
               </div>
             </div>
