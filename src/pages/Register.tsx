@@ -22,11 +22,20 @@ const Register = () => {
 
   const handleGoogleLogin = () => {
     setLoading(true);
+
+    // Set a timeout to detect if the login process is stuck
+    const timeout = setTimeout(() => {
+      setLoading(false);
+      alert('Login is taking too long. Please ensure popups are allowed for this site.');
+    }, 15000);
+
     login()
       .then(() => {
+        clearTimeout(timeout);
         navigate('/dashboard');
       })
       .catch((error: any) => {
+        clearTimeout(timeout);
         console.error('Login error:', error);
         if (error.code === 'auth/popup-blocked') {
           alert('The login popup was blocked by your browser. Please allow popups for this site.');
@@ -35,6 +44,7 @@ const Register = () => {
         }
       })
       .finally(() => {
+        clearTimeout(timeout);
         setLoading(false);
       });
   };
