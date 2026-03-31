@@ -23,7 +23,7 @@ export default function Footer() {
               <span className="font-heading font-bold text-lg">JESUS LOVES YOU</span>
             </div>
             <p className="text-gray-400 text-sm mb-6">
-              Celebration Church<br/>
+              City Church<br/>
               Where GENERALS are Made
             </p>
             <div className="flex gap-4">

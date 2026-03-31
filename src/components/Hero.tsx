@@ -40,7 +40,7 @@ export default function Hero() {
           
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-4 leading-[1.1]">
             JESUS LOVES YOU <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-jly-red to-red-400">CELEBRATION CHURCH</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-jly-red to-red-400">CITY CHURCH</span>
           </h1>
 
           <h2 className="text-2xl md:text-3xl font-bold text-gray-200 mb-6 tracking-wide uppercase">

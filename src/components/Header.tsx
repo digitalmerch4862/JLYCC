@@ -40,7 +40,7 @@ export default function Header() {
               )}
               <div className="flex flex-col">
                 <span className="text-white font-heading font-bold text-lg leading-none tracking-tight">JESUS LOVES YOU</span>
-                <span className="text-white/90 text-[10px] font-bold tracking-[0.2em] uppercase mt-0.5">Celebration Church</span>
+                <span className="text-white/90 text-[10px] font-bold tracking-[0.2em] uppercase mt-0.5">City Church</span>
               </div>
             </div>
           </motion.div>
