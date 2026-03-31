@@ -59,7 +59,7 @@ export default function WhyChooseUs() {
             className="relative h-[500px] rounded-xl overflow-hidden border-4 border-white/10"
           >
             <img 
-              src="https://images.unsplash.com/photo-1519834785169-98be25ec3f84?q=80&w=1000&auto=format&fit=crop" 
+              src="https://scontent.fmnl30-1.fna.fbcdn.net/v/t39.30808-6/649733303_1386967550136383_6181150934109095101_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=13d280&_nc_ohc=_UxUtWQXN5oQ7kNvwHjf8Xj&_nc_oc=AdrkOScsvLo_qm5i9XpPVuv_5-eVTN52STGcAPvQqK3vJOmf3EZjyje43DtFeMQclK0&_nc_zt=23&_nc_ht=scontent.fmnl30-1.fna&_nc_gid=Htcv9in-H8KiJwEwHgTC3w&_nc_ss=7a3a8&oh=00_AfxBTcUXHFx82_urqNCOyTDELpCMyDxSMdQ7AjfKvPkyxg&oe=69D18F53" 
               alt="Worship and Ministry" 
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"

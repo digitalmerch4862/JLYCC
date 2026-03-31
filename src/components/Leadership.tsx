@@ -6,17 +6,17 @@ const leaders = [
   {
     name: "Bhp. Rey Pe Benito",
     role: "President",
-    image: "/RPB.jpg"
+    image: "https://scontent.fmnl30-2.fna.fbcdn.net/v/t39.30808-6/657331523_1404122091754262_3069268156856240990_n.jpg?stp=c342.0.1365.1365a_dst-jpg_s206x206_tt6&_nc_cat=100&ccb=1-7&_nc_sid=a934a8&_nc_ohc=GCQHUklMRkoQ7kNvwGJE8OT&_nc_oc=Adr50GYYuiQ12G5-enrsKx49r_qDkHxSd__r6zPWXelpEGiK5oMkqpujVO_bebCO32Y&_nc_zt=23&_nc_ht=scontent.fmnl30-2.fna&_nc_gid=TDevOlRJ4yIAY335vOvfew&_nc_ss=7a3a8&oh=00_AfxggzrsDaOh9OEY3PLU8jxDSWEsEawCPI3ef7jxWsvBIQ&oe=69D1816E"
   },
   {
     name: "Ps. Joy Pe Benito",
     role: "Chief Operating Officer",
-    image: "/JPB.jpg"
+    image: "https://scontent.fmnl30-2.fna.fbcdn.net/v/t39.30808-6/649670490_1386967966803008_2424536375076875887_n.jpg?stp=c342.0.1365.1365a_dst-jpg_s206x206_tt6&_nc_cat=109&ccb=1-7&_nc_sid=a934a8&_nc_ohc=cbqG8Fvn9vkQ7kNvwEqAtPa&_nc_oc=AdrfaBgbMuNxPrKWQ9GInMYSEvpQkyOmL9NR1oxqaBrkXmRwlfCtDd2i0Eo5e6wOEUI&_nc_zt=23&_nc_ht=scontent.fmnl30-2.fna&_nc_gid=qnXOHbKISjoqrBgxrnQtGA&_nc_ss=7a3a8&oh=00_AfycG3Cg-eMuziUMK4sil3NZyRtZ7AHc_p7GElVyID0InQ&oe=69D16D86"
   },
   {
     name: "Dr. Edna M. Baluran",
     role: "Treasurer",
-    image: "/EMB.jpg"
+    image: "https://scontent.fmnl30-2.fna.fbcdn.net/v/t39.30808-6/480565227_1069330558566752_8450119658131360585_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=dd6889&_nc_ohc=loosaijgQMQQ7kNvwFqZRpm&_nc_oc=AdoVDmPU8BW_gzPbnl0_55EKkbvycd4oFXu7-e_ElL0occWrkz4AR-sQ4369rWhv6bM&_nc_zt=23&_nc_ht=scontent.fmnl30-2.fna&_nc_gid=yFpCi2Pz9on3EvVOhSpGQQ&_nc_ss=7a3a8&oh=00_Afx_MXdjVqOkx8j0mcSnCq1_AUIT4l_Ce6EbRjNeKY27Kg&oe=69D18E4E"
   }
 ];
 
@@ -67,7 +67,6 @@ export default function Leadership() {
                 )}
               </div>
               <h4 className="text-xl font-bold text-jly-blue mb-1 uppercase tracking-tight">{leader.name}</h4>
-              <p className="text-jly-red font-bold text-xs uppercase tracking-widest">{leader.role}</p>
             </motion.div>
           ))}
         </div>

@@ -18,9 +18,10 @@ export default function Hero() {
       <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.img
           style={{ y }}
-          src="/jlycc-building.jpg"
+          src="https://scontent.fmnl30-2.fna.fbcdn.net/v/t39.30808-6/612630923_1337019135131225_686166834040117190_n.png?stp=dst-png_s960x960&_nc_cat=109&ccb=1-7&_nc_sid=2a1932&_nc_ohc=_spsM132ArMQ7kNvwG5Je6I&_nc_oc=AdqCtbqvyDtiQzWvghM-4IOwhJ6-5o0gBaUc5SAb1m6XdfFfGEPaMZ0UTFNggI9iQU4&_nc_zt=23&_nc_ht=scontent.fmnl30-2.fna&_nc_gid=cTbEn_ZsfHdBUlzMKXZbJQ&_nc_ss=7a3a8&oh=00_Afz4f05q17204hTM0PuI-vyPUrTRrwtghBQeBwJ0GUg3EA&oe=69D158A5"
           alt="JLYCC Building"
           className="w-full h-[130%] object-cover absolute -top-[15%]"
+          referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-jly-blue/60 mix-blend-multiply" />
         <div className="absolute inset-0 bg-gradient-to-b from-jly-blue/40 via-transparent to-jly-blue" />

@@ -43,7 +43,9 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-bold text-jly-blue text-lg">Phone</h4>
-                  <p className="text-gray-600">77-000-5669</p>
+                  <p className="text-gray-600">
+                    <a href="tel:770005669" className="hover:text-jly-red transition-colors">77-000-5669</a>
+                  </p>
                 </div>
               </div>
 
@@ -53,8 +55,12 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-bold text-jly-blue text-lg">Email</h4>
-                  <p className="text-gray-600">jlycc_main@yahoo.com</p>
-                  <p className="text-gray-600">jlymi.central@gmail.com</p>
+                  <p className="text-gray-600">
+                    <a href="mailto:jlycc_main@yahoo.com" className="hover:text-jly-red transition-colors">jlycc_main@yahoo.com</a>
+                  </p>
+                  <p className="text-gray-600">
+                    <a href="mailto:jlymi.central@gmail.com" className="hover:text-jly-red transition-colors">jlymi.central@gmail.com</a>
+                  </p>
                 </div>
               </div>
             </div>
