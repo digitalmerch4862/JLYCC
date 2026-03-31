@@ -1,4 +1,6 @@
 import { motion } from 'motion/react';
+import { User } from 'lucide-react';
+import { useState } from 'react';
 
 const leaders = [
   {
@@ -19,6 +21,12 @@ const leaders = [
 ];
 
 export default function Leadership() {
+  const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
+
+  const handleImageError = (name: string) => {
+    setImageErrors(prev => ({ ...prev, [name]: true }));
+  };
+
   return (
     <section id="leadership" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,7 +40,7 @@ export default function Leadership() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 max-w-5xl mx-auto">
           {leaders.map((leader, index) => (
             <motion.div
               key={leader.name}
@@ -42,15 +50,23 @@ export default function Leadership() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group text-center"
             >
-              <div className="relative mb-6 mx-auto w-48 h-48 rounded-full overflow-hidden border-4 border-gray-100 group-hover:border-jly-red transition-colors duration-300">
-                <img 
-                  src={leader.image} 
-                  alt={leader.name} 
-                  className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500"
-                  referrerPolicy="no-referrer"
-                />
+              <div className="relative mb-6 mx-auto w-56 h-56 rounded-full overflow-hidden border-4 border-gray-100 group-hover:border-jly-red transition-all duration-300 shadow-xl">
+                {!imageErrors[leader.name] ? (
+                  <img 
+                    src={leader.image} 
+                    alt={leader.name} 
+                    className="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500"
+                    onError={() => handleImageError(leader.name)}
+                    referrerPolicy="no-referrer"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400">
+                    <User size={80} strokeWidth={1} />
+                  </div>
+                )}
               </div>
-              <h4 className="text-xl font-bold text-jly-blue mb-1">{leader.name}</h4>
+              <h4 className="text-xl font-bold text-jly-blue mb-1 uppercase tracking-tight">{leader.name}</h4>
+              <p className="text-jly-red font-bold text-xs uppercase tracking-widest">{leader.role}</p>
             </motion.div>
           ))}
         </div>

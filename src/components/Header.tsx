@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [logoError, setLogoError] = useState(false);
 
   const navLinks = [
     { name: 'About', href: '#about' },
@@ -19,27 +20,28 @@ export default function Header() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <motion.div 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             className="flex-shrink-0 flex items-center gap-3 cursor-pointer"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
-            <img 
-              src="/logo.png" 
-              alt="JLYCC Logo" 
-              className="w-12 h-12 object-contain"
-              onError={(e) => {
-                // Fallback to text circle if logo.png is not uploaded yet
-                e.currentTarget.style.display = 'none';
-                const fallback = document.getElementById('logo-fallback');
-                if (fallback) fallback.style.display = 'flex';
-              }}
-            />
-            <div id="logo-fallback" className="w-10 h-10 bg-jly-red rounded-full hidden items-center justify-center shadow-lg shadow-jly-red/20">
-              <span className="text-white font-heading font-bold text-xl">JLY</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-white font-heading font-bold text-lg leading-tight">JESUS LOVES YOU</span>
-              <span className="text-jly-red text-xs font-bold tracking-widest uppercase">Celebration Church</span>
+            <div className="relative flex items-center gap-3">
+              {!logoError ? (
+                <img 
+                  src="/logo.png" 
+                  alt="JLYCC Logo" 
+                  className="w-10 h-10 object-contain"
+                  onError={() => setLogoError(true)}
+                />
+              ) : (
+                <div className="w-10 h-10 bg-jly-red rounded-full flex items-center justify-center shadow-lg shadow-jly-red/20">
+                  <span className="text-white font-heading font-bold text-lg">JLY</span>
+                </div>
+              )}
+              <div className="flex flex-col">
+                <span className="text-white font-heading font-bold text-lg leading-none tracking-tight">JESUS LOVES YOU</span>
+                <span className="text-white/90 text-[10px] font-bold tracking-[0.2em] uppercase mt-0.5">Celebration Church</span>
+              </div>
             </div>
           </motion.div>
 
