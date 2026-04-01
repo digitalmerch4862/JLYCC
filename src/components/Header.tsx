@@ -1,10 +1,29 @@
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { Menu, X, Radio, Shield } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { isLiveNow } from '../utils/liveStatus';
+import { useContent } from '../hooks/useContent';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [logoError, setLogoError] = useState(false);
+  const [isLive, setIsLive] = useState(false);
+
+  const { content } = useContent('header', {
+    logoUrl: 'https://scontent.fmnl30-1.fna.fbcdn.net/v/t39.30808-1/453783636_924875829678893_8484670298322969456_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=102&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=X-St79JfrFYQ7kNvwG3fXIP&_nc_oc=Adrz6NiXqrPvkHuLXp8NUlTnnbnC5H8ztOKfrXS0A4CJ3hzl95fj4p0IrzcH9GTWb64&_nc_zt=24&_nc_ht=scontent.fmnl30-1.fna&_nc_gid=cTbEn_ZsfHdBUlzMKXZbJQ&_nc_ss=7a3a8&oh=00_AfwR_AMyMCMIEF801PMjcRSaiSImgFbORNBSFihJ4NGAlQ&oe=69D15C14',
+    churchName: 'JESUS LOVES YOU',
+    tagline: 'City Church',
+    liveMessage: 'Live Now: Sunday Service is Ongoing!',
+    youtubeUrl: 'https://www.youtube.com/@jlymicentral233'
+  });
+
+  useEffect(() => {
+    // Check live status on mount and every minute
+    const checkLive = () => setIsLive(isLiveNow());
+    checkLive();
+    const interval = setInterval(checkLive, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   const navLinks = [
     { name: 'About', href: '#about' },
@@ -17,6 +36,36 @@ export default function Header() {
 
   return (
     <header className="fixed w-full z-50 bg-jly-blue/95 backdrop-blur-sm border-b border-white/10">
+      <AnimatePresence>
+        {isLive && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="bg-jly-red overflow-hidden"
+          >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-center gap-3">
+              <motion.div
+                animate={{ opacity: [1, 0.5, 1] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+                className="w-2 h-2 bg-white rounded-full"
+              />
+              <span className="text-white text-[10px] sm:text-xs font-black tracking-widest uppercase flex items-center gap-2">
+                <Radio size={14} className="animate-pulse" />
+                {content.liveMessage}
+              </span>
+              <a 
+                href={content.youtubeUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="ml-4 bg-white text-jly-red px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-gray-100 transition-colors"
+              >
+                Watch Live
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
@@ -29,7 +78,7 @@ export default function Header() {
             <div className="relative flex items-center gap-3">
               {!logoError ? (
                 <img 
-                  src="https://scontent.fmnl30-1.fna.fbcdn.net/v/t39.30808-1/453783636_924875829678893_8484670298322969456_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=102&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=X-St79JfrFYQ7kNvwG3fXIP&_nc_oc=Adrz6NiXqrPvkHuLXp8NUlTnnbnC5H8ztOKfrXS0A4CJ3hzl95fj4p0IrzcH9GTWb64&_nc_zt=24&_nc_ht=scontent.fmnl30-1.fna&_nc_gid=cTbEn_ZsfHdBUlzMKXZbJQ&_nc_ss=7a3a8&oh=00_AfwR_AMyMCMIEF801PMjcRSaiSImgFbORNBSFihJ4NGAlQ&oe=69D15C14" 
+                  src={content.logoUrl} 
                   alt="JLYCC Logo" 
                   className="w-10 h-10 object-contain"
                   onError={() => setLogoError(true)}
@@ -40,8 +89,8 @@ export default function Header() {
                 </div>
               )}
               <div className="flex flex-col">
-                <span className="text-white font-heading font-bold text-lg leading-none tracking-tight">JESUS LOVES YOU</span>
-                <span className="text-white/90 text-[10px] font-bold tracking-[0.2em] uppercase mt-0.5">City Church</span>
+                <span className="text-white font-heading font-bold text-lg leading-none tracking-tight uppercase">{content.churchName}</span>
+                <span className="text-white/90 text-[10px] font-bold tracking-[0.2em] uppercase mt-0.5">{content.tagline}</span>
               </div>
             </div>
           </motion.div>
@@ -64,20 +113,29 @@ export default function Header() {
           {/* CTA Button */}
           <div className="hidden md:flex items-center gap-6">
             <motion.a
-              href="#donate"
+              href={content.donateButtonLink || "#donate"}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="text-white hover:text-jly-red font-heading font-bold text-sm tracking-wider transition-colors uppercase"
             >
-              Donate
+              {content.donateButtonText || "Donate"}
             </motion.a>
             <motion.a
-              href="#apply"
+              href={content.connectButtonLink || "#contact"}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-jly-red hover:bg-jly-red-dark text-white px-6 py-2.5 rounded font-heading font-bold text-sm tracking-wider transition-colors shadow-lg shadow-jly-red/20"
+              className="bg-jly-red hover:bg-jly-red-dark text-white px-6 py-2.5 rounded font-heading font-bold text-sm tracking-wider transition-colors shadow-lg shadow-jly-red/20 uppercase"
             >
-              Connect
+              {content.connectButtonText || "Connect"}
+            </motion.a>
+            <motion.a
+              href="/login"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="text-white/30 hover:text-jly-red transition-colors"
+              title="Admin Portal"
+            >
+              <Shield size={18} />
             </motion.a>
           </div>
 
@@ -177,14 +235,25 @@ export default function Header() {
                   Donate
                 </motion.a>
                 <motion.a
-                  href="#apply"
+                  href={content.connectButtonLink || "#contact"}
                   onClick={() => setIsOpen(false)}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.7 }}
                   className="w-full text-center bg-jly-red hover:bg-jly-red-dark text-white px-6 py-4 rounded-xl font-heading font-bold text-sm tracking-widest transition-colors shadow-lg shadow-jly-red/20 uppercase"
                 >
-                  Connect Now
+                  {content.connectButtonText || "Connect Now"}
+                </motion.a>
+                <motion.a
+                  href="/login"
+                  onClick={() => setIsOpen(false)}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.8 }}
+                  className="flex items-center justify-center gap-2 text-white/40 hover:text-white text-xs font-bold uppercase tracking-widest pt-4"
+                >
+                  <Shield size={14} />
+                  Admin Portal
                 </motion.a>
               </div>
             </motion.div>

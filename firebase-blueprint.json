@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "WebsiteContent": {
+      "title": "Website Content",
+      "description": "Dynamic content for various sections of the website.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "description": { "type": "string" },
+        "videoUrl": { "type": "string", "format": "url" },
+        "imageUrl": { "type": "string", "format": "url" },
+        "logoUrl": { "type": "string", "format": "url" },
+        "churchName": { "type": "string" },
+        "tagline": { "type": "string" },
+        "liveMessage": { "type": "string" },
+        "youtubeUrl": { "type": "string", "format": "url" },
+        "establishedYear": { "type": "string" },
+        "secRegNo": { "type": "string" },
+        "youtubeChannelUrl": { "type": "string", "format": "url" },
+        "facebookUrl": { "type": "string", "format": "url" },
+        "websiteUrl": { "type": "string", "format": "url" },
+        "headline": { "type": "string" },
+        "subheadline": { "type": "string" },
+        "buttonText": { "type": "string" },
+        "buttonLink": { "type": "string" },
+        "location": { "type": "string" },
+        "locationUrl": { "type": "string", "format": "url" },
+        "phone": { "type": "string" },
+        "emailPrimary": { "type": "string" },
+        "emailSecondary": { "type": "string" },
+        "mapEmbedUrl": { "type": "string", "format": "url" },
+        "reasons": { "type": "array", "items": { "type": "string" } },
+        "quote": { "type": "string" },
+        "quoteAuthor": { "type": "string" },
+        "items": { "type": "array", "items": { "type": "object" } }
+      }
+    },
+    "Admin": {
+      "title": "Admin",
+      "description": "Authorized administrators for the CMS.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "superadmin"] },
+        "permissions": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["email", "role"]
+    }
+  },
+  "firestore": {
+    "/website_content/{section}": {
+      "schema": "WebsiteContent",
+      "description": "Stores content for each website section."
+    },
+    "/admins/{adminId}": {
+      "schema": "Admin",
+      "description": "Stores admin user data and permissions."
+    }
+  }
+}

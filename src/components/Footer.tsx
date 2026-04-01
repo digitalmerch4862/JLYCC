@@ -1,6 +1,17 @@
-import { Facebook, Youtube } from 'lucide-react';
+import { Facebook, Youtube, Shield } from 'lucide-react';
+import { useContent } from '../hooks/useContent';
 
 export default function Footer() {
+  const { content } = useContent('footer', {
+    logoUrl: 'https://scontent.fmnl30-1.fna.fbcdn.net/v/t39.30808-1/453783636_924875829678893_8484670298322969456_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=102&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=X-St79JfrFYQ7kNvwG3fXIP&_nc_oc=Adrz6NiXqrPvkHuLXp8NUlTnnbnC5H8ztOKfrXS0A4CJ3hzl95fj4p0IrzcH9GTWb64&_nc_zt=24&_nc_ht=scontent.fmnl30-1.fna&_nc_gid=cTbEn_ZsfHdBUlzMKXZbJQ&_nc_ss=7a3a8&oh=00_AfwR_AMyMCMIEF801PMjcRSaiSImgFbORNBSFihJ4NGAlQ&oe=69D15C14',
+    churchName: 'JESUS LOVES YOU',
+    tagline: 'City Church\nWhere GENERALS are Made',
+    facebookUrl: 'https://www.facebook.com/JLYMain',
+    youtubeUrl: 'https://www.youtube.com/@jlymicentral233',
+    secRegNo: '0000110444',
+    websiteUrl: 'http://www.jlycc.org'
+  });
+
   return (
     <footer className="bg-jly-blue-light text-white py-12 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -8,7 +19,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <img 
-                src="https://scontent.fmnl30-1.fna.fbcdn.net/v/t39.30808-1/453783636_924875829678893_8484670298322969456_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=102&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=X-St79JfrFYQ7kNvwG3fXIP&_nc_oc=Adrz6NiXqrPvkHuLXp8NUlTnnbnC5H8ztOKfrXS0A4CJ3hzl95fj4p0IrzcH9GTWb64&_nc_zt=24&_nc_ht=scontent.fmnl30-1.fna&_nc_gid=cTbEn_ZsfHdBUlzMKXZbJQ&_nc_ss=7a3a8&oh=00_AfwR_AMyMCMIEF801PMjcRSaiSImgFbORNBSFihJ4NGAlQ&oe=69D15C14" 
+                src={content.logoUrl} 
                 alt="JLYCC Logo" 
                 className="w-10 h-10 object-contain"
                 onError={(e) => {
@@ -20,17 +31,16 @@ export default function Footer() {
               <div id="footer-logo-fallback" className="w-8 h-8 bg-jly-red rounded-full hidden items-center justify-center">
                 <span className="text-white font-heading font-bold text-sm">JLY</span>
               </div>
-              <span className="font-heading font-bold text-lg">JESUS LOVES YOU</span>
+              <span className="font-heading font-bold text-lg uppercase">{content.churchName}</span>
             </div>
-            <p className="text-gray-400 text-sm mb-6">
-              City Church<br/>
-              Where GENERALS are Made
+            <p className="text-gray-400 text-sm mb-6 whitespace-pre-line">
+              {content.tagline}
             </p>
             <div className="flex gap-4">
-              <a href="https://www.facebook.com/JLYMain" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#1877F2] transition-colors" aria-label="Facebook Page">
+              <a href={content.facebookUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#1877F2] transition-colors" aria-label="Facebook Page">
                 <Facebook size={24} />
               </a>
-              <a href="https://www.youtube.com/@jlymicentral233" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF0000] transition-colors" aria-label="YouTube Channel">
+              <a href={content.youtubeUrl} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#FF0000] transition-colors" aria-label="YouTube Channel">
                 <Youtube size={24} />
               </a>
             </div>
@@ -49,10 +59,19 @@ export default function Footer() {
           <div>
             <h4 className="font-bold mb-4 uppercase tracking-wider text-sm text-gray-300">Legal & Support</h4>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li>SEC Reg No: 0000110444</li>
+              <li>SEC Reg No: {content.secRegNo}</li>
               <li>Registered Non-Profit Organization</li>
               <li><a href="#donate" className="text-jly-red hover:text-white transition-colors font-bold">Donate to our Mission</a></li>
-              <li><a href="http://www.jlycc.org" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">www.jlycc.org</a></li>
+              <li><a href={content.websiteUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">{content.websiteUrl.replace('http://', '').replace('https://', '')}</a></li>
+              <li className="pt-4">
+                <a 
+                  href="/login" 
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-bold uppercase tracking-widest transition-all text-gray-400 hover:text-white"
+                >
+                  <Shield size={14} className="text-jly-red" />
+                  Admin Portal
+                </a>
+              </li>
             </ul>
           </div>
         </div>

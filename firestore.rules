@@ -1,0 +1,99 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: website_content
+    // Document ID: {section} (e.g., 'hero', 'about', 'footer')
+    // Fields:
+    //   - title: string
+    //   - subtitle: string
+    //   - description: string
+    //   - videoUrl: string
+    //   - imageUrl: string
+    //   - logoUrl: string
+    //   - churchName: string
+    //   - tagline: string
+    //   - liveMessage: string
+    //   - youtubeUrl: string
+    //   - establishedYear: string
+    //   - secRegNo: string
+    //   - youtubeChannelUrl: string
+    //   - facebookUrl: string
+    //   - websiteUrl: string
+    //   - headline: string
+    //   - subheadline: string
+    //   - buttonText: string
+    //   - buttonLink: string
+    //   - location: string
+    //   - locationUrl: string
+    //   - phone: string
+    //   - emailPrimary: string
+    //   - emailSecondary: string
+    //   - mapEmbedUrl: string
+    //   - reasons: list (strings)
+    //   - quote: string
+    //   - quoteAuthor: string
+    //   - items: list (objects)
+    //
+    // Collection: admins
+    // Document ID: {adminId} (usually user UID)
+    // Fields:
+    //   - email: string (required)
+    //   - role: string (required, 'admin' or 'superadmin')
+    //   - permissions: list (strings)
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role in ['admin', 'superadmin'] ||
+        (request.auth.token.email == "digitalmerch4862@gmail.com" && request.auth.token.email_verified == true)
+      );
+    }
+
+    function isValidWebsiteContent(data) {
+      return data.keys().hasAny(['title', 'subtitle', 'description', 'videoUrl', 'imageUrl', 'logoUrl', 'churchName', 'tagline', 'liveMessage', 'youtubeUrl', 'establishedYear', 'secRegNo', 'youtubeChannelUrl', 'facebookUrl', 'websiteUrl', 'headline', 'subheadline', 'buttonText', 'buttonLink', 'location', 'locationUrl', 'phone', 'emailPrimary', 'emailSecondary', 'mapEmbedUrl', 'reasons', 'quote', 'quoteAuthor', 'items']);
+    }
+
+    function isValidAdmin(data) {
+      return data.email is string &&
+             data.role in ['admin', 'superadmin'] &&
+             (!('permissions' in data) || data.permissions is list);
+    }
+
+    // ===============================================================
+    // Collection Rules
+    // ===============================================================
+
+    // Website Content: Publicly readable, admin writable
+    match /website_content/{section} {
+      allow read: if true;
+      allow create, update: if isAdmin() && isValidWebsiteContent(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // Test collection for connection verification
+    match /test/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Admins: Only admins can read/write
+    match /admins/{adminId} {
+      allow read: if isAuthenticated() && (request.auth.uid == adminId || isAdmin());
+      allow create, update: if isAdmin() && isValidAdmin(request.resource.data);
+      allow delete: if isAdmin() && request.auth.token.email != "digitalmerch4862@gmail.com";
+    }
+  }
+}
