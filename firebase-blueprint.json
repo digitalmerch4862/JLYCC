@@ -33,6 +33,9 @@
         "reasons": { "type": "array", "items": { "type": "string" } },
         "quote": { "type": "string" },
         "quoteAuthor": { "type": "string" },
+        "bgVideoId": { "type": "string" },
+        "videoStart": { "type": "number" },
+        "videoEnd": { "type": "number" },
         "items": { "type": "array", "items": { "type": "object" } }
       }
     },

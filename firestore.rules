@@ -36,6 +36,9 @@ service cloud.firestore {
     //   - reasons: list (strings)
     //   - quote: string
     //   - quoteAuthor: string
+    //   - bgVideoId: string
+    //   - videoStart: number
+    //   - videoEnd: number
     //   - items: list (objects)
     //
     // Collection: admins
@@ -64,7 +67,7 @@ service cloud.firestore {
     }
 
     function isValidWebsiteContent(data) {
-      return data.keys().hasAny(['title', 'subtitle', 'description', 'videoUrl', 'imageUrl', 'logoUrl', 'churchName', 'tagline', 'liveMessage', 'youtubeUrl', 'establishedYear', 'secRegNo', 'youtubeChannelUrl', 'facebookUrl', 'websiteUrl', 'headline', 'subheadline', 'buttonText', 'buttonLink', 'location', 'locationUrl', 'phone', 'emailPrimary', 'emailSecondary', 'mapEmbedUrl', 'reasons', 'quote', 'quoteAuthor', 'items']);
+      return data.keys().hasAny(['title', 'subtitle', 'description', 'videoUrl', 'imageUrl', 'logoUrl', 'churchName', 'tagline', 'liveMessage', 'youtubeUrl', 'establishedYear', 'secRegNo', 'youtubeChannelUrl', 'facebookUrl', 'websiteUrl', 'headline', 'subheadline', 'buttonText', 'buttonLink', 'location', 'locationUrl', 'phone', 'emailPrimary', 'emailSecondary', 'mapEmbedUrl', 'reasons', 'quote', 'quoteAuthor', 'items', 'bgVideoId', 'videoStart', 'videoEnd']);
     }
 
     function isValidAdmin(data) {

@@ -13,6 +13,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import SEO from './components/SEO';
 import Login from './components/Login';
+import FloatingChat from './components/FloatingChat';
 import AdminLayout from './components/Admin/AdminLayout';
 import Dashboard from './components/Admin/Dashboard';
 import SectionForm from './components/Admin/SectionForm';
@@ -36,6 +37,7 @@ function LandingPage() {
         <Contact />
       </main>
       <Footer />
+      <FloatingChat />
     </div>
   );
 }
@@ -56,12 +58,16 @@ export default function App() {
               sectionId="hero" 
               title="Hero Section" 
               description="Manage the main landing page headline and background."
+              PreviewComponent={Hero}
               fields={[
                 { name: 'welcomeText', label: 'Welcome Text', type: 'text', placeholder: 'Welcome to JLYCC' },
                 { name: 'headline', label: 'Main Headline', type: 'textarea', placeholder: 'JESUS LOVES YOU CITY CHURCH' },
                 { name: 'subheadline', label: 'Subheadline', type: 'text', placeholder: 'Where Generals Are Made' },
                 { name: 'description', label: 'Description', type: 'textarea', placeholder: 'Raising leaders for Kingdom impact since 1983.' },
                 { name: 'bgImage', label: 'Background Image URL', type: 'url' },
+                { name: 'bgVideoId', label: 'YouTube Video ID', type: 'text', placeholder: 'e.g. 7xLhEOxhxPA' },
+                { name: 'videoStart', label: 'Video Start (seconds)', type: 'number', placeholder: '0' },
+                { name: 'videoEnd', label: 'Video End (seconds)', type: 'number', placeholder: '148' },
               ]}
             />
           </AdminLayout>
@@ -146,6 +152,7 @@ export default function App() {
               sectionId="about" 
               title="About Section" 
               description="Update the ministry's history and core values."
+              PreviewComponent={About}
               fields={[
                 { name: 'title', label: 'Title', type: 'text' },
                 { name: 'subtitle', label: 'Subtitle', type: 'text' },

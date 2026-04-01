@@ -2,12 +2,16 @@ import { motion } from 'motion/react';
 import { Shield, BookOpen, Globe, Award, Radio, ExternalLink } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { isLiveNow } from '../utils/liveStatus';
-import { useContent } from '../hooks/useContent';
+import { useRealTimeContent } from '../hooks/useRealTimeContent';
 
-export default function About() {
+interface AboutProps {
+  previewData?: any;
+}
+
+export default function About({ previewData }: AboutProps) {
   const [isLive, setIsLive] = useState(false);
 
-  const { content } = useContent('about', {
+  const defaultData = {
     title: 'ABOUT THE MINISTRY',
     subtitle: 'A LEGACY OF SPIRITUAL AUTHORITY',
     description: 'Jesus Loves You Ministries, Inc. is a registered non-stock, non-profit Christian Corporation dedicated to religious Christian activities. Since our founding on February 23, 1983, we have been committed to building a legacy of spiritual authority and leadership training for kingdom impact.',
@@ -16,7 +20,10 @@ export default function About() {
     establishedYear: '1983',
     secRegNo: '0000110444',
     youtubeChannelUrl: 'https://www.youtube.com/@jlymicentral233'
-  });
+  };
+
+  const { data: contentData } = useRealTimeContent('about', defaultData);
+  const content = previewData || contentData || defaultData;
 
   useEffect(() => {
     const checkLive = () => setIsLive(isLiveNow());

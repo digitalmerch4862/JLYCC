@@ -58,7 +58,7 @@ export default function VisionSummary() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {content.pillars.map((pillar: any, index: number) => {
             const Icon = pillarIcons[pillar.title as keyof typeof pillarIcons] || Heart;
             return (
@@ -66,6 +66,7 @@ export default function VisionSummary() {
                 key={pillar.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 0.95 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="bg-white p-8 rounded-xl shadow-sm hover:shadow-xl transition-all border border-gray-100 group text-center"

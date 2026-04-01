@@ -73,8 +73,13 @@ export default function Login() {
         className="max-w-md w-full bg-white rounded-2xl shadow-2xl p-8"
       >
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-jly-red rounded-full flex items-center justify-center mx-auto mb-4">
-            <LogIn className="text-white" size={32} />
+          <div className="w-16 h-16 bg-jly-red rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
+            <img 
+              src="https://yt3.googleusercontent.com/ytc/AIdro_kah_NUvn3TN3XqFK1yhqujYK3NjDx4vXd1oVgL3bdaPA=s160-c-k-c0x00ffffff-no-rj" 
+              alt="JLYCC Logo" 
+              className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
+            />
           </div>
           <h1 className="text-3xl font-black text-jly-blue">JLYCC App</h1>
         </div>
