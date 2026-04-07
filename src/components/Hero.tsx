@@ -119,6 +119,7 @@ export default function Hero({ previewData }: HeroProps) {
               ease: "linear"
             }}
             className="absolute w-1 h-1 bg-white rounded-full blur-[1px]"
+            aria-hidden="true"
           />
         ))}
       </div>
@@ -131,6 +132,7 @@ export default function Hero({ previewData }: HeroProps) {
         }}
         transition={{ type: "spring", damping: 30, stiffness: 50 }}
         className="absolute w-[600px] h-[600px] bg-jly-red/10 rounded-full blur-[120px] pointer-events-none z-5 hidden lg:block"
+        aria-hidden="true"
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -141,7 +143,7 @@ export default function Hero({ previewData }: HeroProps) {
           className="max-w-4xl mx-auto"
         >
           <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-8">
-            <span className={`w-2 h-2 rounded-full ${isLive ? 'bg-jly-red animate-pulse' : 'bg-green-400'}`} />
+            <span className={`w-2 h-2 rounded-full ${isLive ? 'bg-jly-red animate-pulse' : 'bg-green-400'}`} aria-hidden="true" />
             <span className="text-white text-xs font-bold tracking-widest uppercase">
               {isLive ? 'Live Now: Sunday Service' : content.welcomeText}
             </span>

@@ -64,7 +64,7 @@ export default function Leadership() {
                     referrerPolicy="no-referrer"
                   />
                 ) : (
-                  <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400">
+                  <div className="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400" aria-hidden="true">
                     <User size={80} strokeWidth={1} />
                   </div>
                 )}

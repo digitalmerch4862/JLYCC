@@ -19,7 +19,7 @@ export default function FloatingChat() {
   }
 
   return (
-    <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-4">
+    <div className="fixed top-8 right-8 z-50 flex flex-col items-end gap-4">
       {/* Initial Greeting Bubble */}
       {!isOpen && (
         <motion.div
@@ -68,8 +68,9 @@ export default function FloatingChat() {
           <button 
             onClick={() => setIsOpen(false)}
             className="text-gray-400 hover:text-jly-red transition-colors"
+            aria-label="Close chat"
           >
-            <X size={20} />
+            <X size={20} aria-hidden="true" />
           </button>
         </div>
         <div className="flex items-center gap-1 mb-4">
@@ -86,7 +87,7 @@ export default function FloatingChat() {
           rel="noopener noreferrer"
           className="block w-full bg-jly-red text-white text-center py-3 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-jly-red/90 transition-all shadow-lg shadow-jly-red/20 mb-3 flex items-center justify-center gap-2"
         >
-          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 2C6.477 2 2 6.145 2 11.258c0 2.91 1.453 5.503 3.735 7.214V22l3.363-1.845c.89.247 1.83.38 2.902.38 5.523 0 10-4.145 10-9.258S17.523 2 12 2zm1.07 12.443l-2.55-2.72-4.97 2.72 5.46-5.8 2.62 2.72 4.9-2.72-5.46 5.8z"/>
           </svg>
           Open Messenger
@@ -120,11 +121,12 @@ export default function FloatingChat() {
           onClick={() => setIsOpen(!isOpen)}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
+          aria-label={isOpen ? "Close chat" : "Open chat"}
           className={`w-16 h-16 rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 relative ${
             isOpen ? 'bg-jly-blue text-white' : 'bg-jly-red text-white'
           }`}
         >
-          {isOpen ? <X size={32} /> : <MessageCircle size={32} />}
+          {isOpen ? <X size={32} aria-hidden="true" /> : <MessageCircle size={32} aria-hidden="true" />}
           
           {/* Pulse effect when closed */}
           {!isOpen && (

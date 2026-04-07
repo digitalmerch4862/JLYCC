@@ -102,8 +102,8 @@ export default function Events() {
               <div className={`sm:w-48 ${event.color} p-8 flex flex-col items-center justify-center text-white text-center`}>
                 <span className="text-sm font-bold tracking-widest uppercase opacity-80 mb-2">{event.day.split(' ')[1] || 'SUN'}</span>
                 <span className="text-4xl font-black mb-1">SUN</span>
-                <div className="w-10 h-1 bg-white/30 my-4 rounded-full"></div>
-                <Clock size={24} className="mb-2" />
+                <div className="w-10 h-1 bg-white/30 my-4 rounded-full" aria-hidden="true"></div>
+                <Clock size={24} className="mb-2" aria-hidden="true" />
                 <span className="font-bold">{event.time}</span>
               </div>
               
@@ -134,7 +134,7 @@ export default function Events() {
                   
                   <div className="flex flex-wrap items-center gap-6 mb-8 text-sm text-gray-500 font-medium">
                     <div className="flex items-center gap-2">
-                      <MapPin size={16} className="text-jly-red" />
+                      <MapPin size={16} className="text-jly-red" aria-hidden="true" />
                       {event.location}
                     </div>
                   </div>
@@ -142,22 +142,10 @@ export default function Events() {
                   <div className="flex items-center gap-4">
                     <Link
                       to="/login"
-                      className={`flex-1 py-3 px-6 rounded-xl font-bold text-white shadow-lg transition-all ${event.color} hover:brightness-110 flex items-center justify-center gap-2 uppercase tracking-widest text-xs`}
+                      className={`flex-1 py-3 px-6 rounded-xl font-bold text-white shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl ${event.color} hover:brightness-110 flex items-center justify-center gap-2 uppercase tracking-widest text-xs cursor-pointer`}
                     >
                       Register Now <ExternalLink size={16} />
                     </Link>
-                    {event.facebookUrl && (
-                      <motion.a
-                        href={event.facebookUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="py-3 px-6 rounded-xl font-bold text-jly-blue border-2 border-gray-200 hover:border-jly-blue transition-all uppercase tracking-widest text-xs flex items-center gap-2"
-                      >
-                        Details <ExternalLink size={14} />
-                      </motion.a>
-                    )}
                   </div>
                 </div>
               </div>

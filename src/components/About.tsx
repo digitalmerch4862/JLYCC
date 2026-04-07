@@ -51,7 +51,7 @@ export default function About({ previewData }: AboutProps) {
               className="aspect-video w-full rounded-xl overflow-hidden shadow-2xl bg-gray-100 border-4 border-gray-50 hover:border-jly-red transition-colors duration-500 relative group"
             >
               {isLive && (
-                <div className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-jly-red text-white px-3 py-1.5 rounded-full shadow-lg animate-pulse">
+                <div className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-jly-red text-white px-3 py-1.5 rounded-full shadow-lg animate-pulse" aria-hidden="true">
                   <Radio size={16} />
                   <span className="text-[10px] font-black uppercase tracking-widest">Live Now</span>
                 </div>
@@ -108,7 +108,7 @@ export default function About({ previewData }: AboutProps) {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded bg-jly-blue/5 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 rounded bg-jly-blue/5 flex items-center justify-center flex-shrink-0" aria-hidden="true">
                   <Shield className="text-jly-red" size={24} />
                 </div>
                 <div>
@@ -118,7 +118,7 @@ export default function About({ previewData }: AboutProps) {
               </div>
               
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded bg-jly-blue/5 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 rounded bg-jly-blue/5 flex items-center justify-center flex-shrink-0" aria-hidden="true">
                   <BookOpen className="text-jly-red" size={24} />
                 </div>
                 <div>
@@ -128,7 +128,7 @@ export default function About({ previewData }: AboutProps) {
               </div>
               
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded bg-jly-blue/5 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 rounded bg-jly-blue/5 flex items-center justify-center flex-shrink-0" aria-hidden="true">
                   <Globe className="text-jly-red" size={24} />
                 </div>
                 <div>
@@ -138,7 +138,7 @@ export default function About({ previewData }: AboutProps) {
               </div>
               
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded bg-jly-blue/5 flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 rounded bg-jly-blue/5 flex items-center justify-center flex-shrink-0" aria-hidden="true">
                   <Award className="text-jly-red" size={24} />
                 </div>
                 <div>

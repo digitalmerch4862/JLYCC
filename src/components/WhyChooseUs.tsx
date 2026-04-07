@@ -22,7 +22,7 @@ export default function WhyChooseUs() {
   return (
     <section id="why-us" className="py-24 bg-jly-blue text-white relative overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-10" aria-hidden="true">
         <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
       </div>
 
@@ -53,7 +53,7 @@ export default function WhyChooseUs() {
                   transition={{ duration: 0.5, delay: 0.2 + (index * 0.1) }}
                   className="flex items-start gap-3"
                 >
-                  <CheckCircle2 className="text-jly-red flex-shrink-0 mt-1" size={20} />
+                  <CheckCircle2 className="text-jly-red flex-shrink-0 mt-1" size={20} aria-hidden="true" />
                   <span className="text-gray-200 text-lg">{reason}</span>
                 </motion.li>
               ))}

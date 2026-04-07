@@ -6,6 +6,10 @@ import VisionSummary from './components/Programs';
 import Events from './components/Events';
 import WhyChooseUs from './components/WhyChooseUs';
 import Gallery from './components/Gallery';
+import JLYCC from './components/JLYCC';
+import KingdomKids from './components/KingdomKids';
+import LeadtakersYouth from './components/LeadtakersYouth';
+import LeadtakersPro from './components/LeadtakersPro';
 import Leadership from './components/Leadership';
 import Support from './components/Support';
 import CTA from './components/CTA';
@@ -31,6 +35,10 @@ function LandingPage() {
         <Events />
         <WhyChooseUs />
         <Gallery />
+        <JLYCC />
+        <KingdomKids />
+        <LeadtakersYouth />
+        <LeadtakersPro />
         <Leadership />
         <Support />
         <CTA />

@@ -3,7 +3,7 @@ import { useContent } from '../hooks/useContent';
 
 export default function Footer() {
   const { content } = useContent('footer', {
-    logoUrl: 'https://yt3.googleusercontent.com/ytc/AIdro_kah_NUvn3TN3XqFK1yhqujYK3NjDx4vXd1oVgL3bdaPA=s160-c-k-c0x00ffffff-no-rj',
+    logoUrl: 'https://scontent.fmnl30-1.fna.fbcdn.net/v/t39.30808-1/453783636_924875829678893_8484670298322969456_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=102&ccb=1-7&_nc_sid=2d3e12&_nc_ohc=X-St79JfrFYQ7kNvwG3fXIP&_nc_oc=Adrz6NiXqrPvkHuLXp8NUlTnnbnC5H8ztOKfrXS0A4CJ3hzl95fj4p0IrzcH9GTWb64&_nc_zt=24&_nc_ht=scontent.fmnl30-1.fna&_nc_gid=cTbEn_ZsfHdBUlzMKXZbJQ&_nc_ss=7a3a8&oh=00_AfwR_AMyMCMIEF801PMjcRSaiSImgFbORNBSFihJ4NGAlQ&oe=69D15C14',
     churchName: 'JESUS LOVES YOU',
     tagline: 'City Church\nWhere GENERALS are Made',
     facebookUrl: 'https://www.facebook.com/JLYMain',
@@ -69,7 +69,7 @@ export default function Footer() {
                   href="/login" 
                   className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-bold uppercase tracking-widest transition-all text-gray-400 hover:text-white"
                 >
-                  <Shield size={14} className="text-jly-red" />
+                  <Shield size={14} className="text-jly-red" aria-hidden="true" />
                   Admin Portal
                 </a>
               </li>

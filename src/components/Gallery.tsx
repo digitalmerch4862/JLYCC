@@ -2,11 +2,12 @@ import { motion, AnimatePresence } from 'motion/react';
 import React, { useState } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useContent } from '../hooks/useContent';
+import Skeleton from './Skeleton';
 
 export default function Gallery() {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
 
-  const { content } = useContent('gallery', {
+  const { content, loading } = useContent('gallery', {
     title: 'OUR COMMUNITY',
     subtitle: 'LIFE AT JLYCC',
     description: 'Experience the joy, fellowship, and spiritual growth within our church family.',
@@ -39,6 +40,24 @@ export default function Gallery() {
       setSelectedPhotoIndex((selectedPhotoIndex - 1 + content.photos.length) % content.photos.length);
     }
   };
+
+  if (loading) {
+    return (
+      <section className="py-24 bg-gray-50 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <Skeleton className="h-4 w-32 mx-auto mb-2" />
+            <Skeleton className="h-12 w-64 mx-auto" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+              <Skeleton key={i} className="aspect-[4/5] w-full" />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="gallery" className="py-24 bg-gray-50 overflow-hidden">
@@ -120,15 +139,17 @@ export default function Gallery() {
             <button
               className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-50 p-2"
               onClick={() => setSelectedPhotoIndex(null)}
+              aria-label="Close lightbox"
             >
-              <X size={40} />
+              <X size={40} aria-hidden="true" />
             </button>
 
             <button
               className="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors p-4 z-50 hidden md:block"
               onClick={handlePrev}
+              aria-label="Previous photo"
             >
-              <ChevronLeft size={64} />
+              <ChevronLeft size={64} aria-hidden="true" />
             </button>
 
             <div className="relative max-w-5xl w-full flex flex-col items-center">
@@ -161,8 +182,9 @@ export default function Gallery() {
             <button
               className="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors p-4 z-50 hidden md:block"
               onClick={handleNext}
+              aria-label="Next photo"
             >
-              <ChevronRight size={64} />
+              <ChevronRight size={64} aria-hidden="true" />
             </button>
           </motion.div>
         )}

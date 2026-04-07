@@ -1,9 +1,10 @@
 import { motion } from 'motion/react';
 import { Quote } from 'lucide-react';
 import { useContent } from '../hooks/useContent';
+import Skeleton from './Skeleton';
 
 export default function Testimonials() {
-  const { content } = useContent('testimonials', {
+  const { content, loading } = useContent('testimonials', {
     title: 'TESTIMONIES',
     subtitle: 'FROM CALLING TO COMMISSIONING',
     items: [
@@ -24,6 +25,28 @@ export default function Testimonials() {
       }
     ]
   });
+
+  if (loading) {
+    return (
+      <section className="py-24 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <Skeleton className="h-4 w-32 mx-auto mb-2" />
+            <Skeleton className="h-12 w-64 mx-auto" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+                <Skeleton className="h-24 w-full mb-4" />
+                <Skeleton className="h-6 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-24 bg-gray-50">
