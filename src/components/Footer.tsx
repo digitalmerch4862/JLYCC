@@ -3,7 +3,7 @@ import { useContent } from '../hooks/useContent';
 
 export default function Footer() {
   const { content } = useContent('footer', {
-    logoUrl: '/logo.png',
+    logoUrl: '/android-chrome-512x512.png',
     churchName: 'JESUS LOVES YOU',
     tagline: 'City Church\nWhere GENERALS are Made',
     facebookUrl: 'https://www.facebook.com/JLYMain',

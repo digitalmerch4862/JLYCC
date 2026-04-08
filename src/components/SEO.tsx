@@ -13,7 +13,7 @@ export default function SEO({
   title = "Jesus Lord of the Youth Christian Church (JLYCC)", 
   description = "A community of believers dedicated to raising leaders and spreading the love of Christ. Join us at JLYCC for spiritual growth, fellowship, and service.",
   keywords = "JLYCC, Jesus Lord of the Youth, Christian Church, Mandaluyong, Church, Youth Ministry, Leadership, Faith, Community",
-  image = "/logo.png",
+  image = "/android-chrome-512x512.png",
   url = "https://jlycc.org"
 }: SEOProps) {
   const siteTitle = title.includes("JLYCC") ? title : `${title} | JLYCC`;
