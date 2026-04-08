@@ -1,17 +1,11 @@
 import { motion } from 'motion/react';
 import { MessageCircle, X } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export default function FloatingChat() {
   const [isOpen, setIsOpen] = useState(false);
-  const [showInitial, setShowInitial] = useState(true);
   const location = useLocation();
-
-  useEffect(() => {
-    const timer = setTimeout(() => setShowInitial(false), 8000);
-    return () => clearTimeout(timer);
-  }, []);
 
   // Hide on admin and login pages
   if (location.pathname.startsWith('/admin') || location.pathname === '/login') {
@@ -19,24 +13,7 @@ export default function FloatingChat() {
   }
 
   return (
-    <div className="fixed top-8 right-8 z-50 flex flex-col items-end gap-4">
-      {/* Initial Greeting Bubble */}
-      {!isOpen && (
-        <motion.div
-          initial={{ opacity: 0, x: 20, scale: 0.8 }}
-          animate={{ 
-            opacity: showInitial ? 1 : 0, 
-            x: showInitial ? 0 : 20,
-            scale: showInitial ? 1 : 0.8,
-            pointerEvents: showInitial ? 'auto' : 'none'
-          }}
-          className="bg-jly-blue text-white px-4 py-2 rounded-full shadow-lg text-sm font-bold whitespace-nowrap mb-2 relative"
-        >
-          How can we help?
-          <div className="absolute -bottom-1 right-6 w-2 h-2 bg-jly-blue rotate-45" />
-        </motion.div>
-      )}
-
+    <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-4">
       {/* Tooltip/Message */}
       <motion.div
         initial={{ opacity: 0, y: 20, scale: 0.8 }}
